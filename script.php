@@ -1,9 +1,10 @@
 <?php
-// Encrypted expiration date (generated using the encryption key `jrcsrg`)
-$encryptedDate = "U2FsdGVkX1+E3NcNQZ7OgJWwMvXtJzg14ys6rBHEJc8="; // Replace with your actual encrypted date
+// Encrypted expiration date
+$encryptedDate = "cJiyOpYZ1nUMqwS2zfkoahWXkUXD5xSxz4vsVYsEdt8="; // Replace with the correct encrypted date
 
 // Decryption function
-function decryptDate($encrypted) {
+function decryptDate($encrypted)
+{
     $encryptionKey = "jrcsrg"; // Encryption key
     $method = "AES-256-CBC"; // Encryption method
     $iv = substr(hash('sha256', 'my_secret_iv'), 0, 16); // Initialization vector (IV)
@@ -13,12 +14,21 @@ function decryptDate($encrypted) {
 // Decrypt the expiration date
 $expirationDate = decryptDate($encryptedDate);
 
+// Debugging: Output decrypted date for verification
+if (!$expirationDate) {
+    die("Decryption failed. Please verify the encryption key and method.");
+}
+// echo "Decrypted Date: " . $expirationDate . "<br>";
+
 // Get the current date and time
 $currentDate = date("Y-m-d H:i:s");
 
+// Debugging: Output current date
+// echo "Current Date: " . $currentDate . "<br>";
+
 // Check expiration
-if (!$expirationDate || strtotime($currentDate) > strtotime($expirationDate)) {
-    echo base64_encode("expired"); // Return an encoded response for expiration
+if (strtotime($currentDate) > strtotime($expirationDate)) {
+    echo base64_encode("expired");
     exit;
 }
 
