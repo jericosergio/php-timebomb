@@ -1,7 +1,5 @@
 <?php
-$cdnUrl = baseurl("/script.php"); // CDN URL
-
-$response = @file_get_contents($cdnUrl);
+$response = @file_get_contents("https://mediumaquamarine-lapwing-258158.hostingersite.com/ALTA-HMS/script.php");
 
 if ($response === false) {
     die("Unable to verify the application. Please contact support.");
@@ -9,9 +7,13 @@ if ($response === false) {
 
 $result = base64_decode($response);
 
-if ($result === "expired") {
-    die("This application has expired. Please contact support for assistance.");
+if (base64_decode($response) === "false") {
+    die("The system has expired. Please contact admin - jrcsrg");
 }
 
-// continue if valid
+echo 'test works.';
+echo date("Y-m-d H:i:s");
+
 ?>
+
+
